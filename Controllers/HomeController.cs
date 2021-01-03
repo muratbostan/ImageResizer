@@ -19,6 +19,7 @@ namespace ImageResizer.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.ImageUrl = "images/image.jpg";
             return View();
         }
  

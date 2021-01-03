@@ -1,5 +1,53 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Image Resizer";
 }
 
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Image Resizer</h1>
+        <p class="lead text-muted">-</p>
  
+    </div>
+</section>
+ <div class="row">
+ 
+     <div class="col-md-4">
+         <div class="card mb-4 shadow-sm">
+             <img src="/Image?url=@ViewBag.ImageUrl11111&width=360&height=230" alt="Image" />
+             <div class="card-body">
+                 <p>If Image Doesn't Exist</p>
+                 <p>Height:350 </p>
+                 <p>Width:360 </p>
+             </div>
+         </div>
+     </div>
+
+     <div class="col-md-4">
+         <div class="card mb-4 shadow-sm">
+             <img src="/Image?url=@ViewBag.ImageUrl&width=260&height=230" alt="Image" />
+             <div class="card-body">
+                 <p>Height:260 </p>
+                 <p>Width:230 </p>
+             </div>
+         </div>
+     </div>
+     <div class="col-md-4">
+         <div class="card mb-4 shadow-sm">
+             <img src="/Image?url=@ViewBag.ImageUrl&width=560&height=330" alt="Image" />
+             <div class="card-body">
+                 <p>Height:560 </p>
+                 <p>Width:330 </p>
+             </div>
+         </div>
+     </div>
+     <div class="col-md-4">
+         <div class="card mb-4 shadow-sm">
+             <img src="/Image?url=@ViewBag.ImageUrl&width=460&height=430" alt="Image" />
+             <div class="card-body">
+                 <p>Height:460 </p>
+                 <p>Width:430 </p>
+             </div>
+         </div>
+     </div>
+
+ </div>

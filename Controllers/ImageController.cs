@@ -23,34 +23,43 @@ namespace ImageResizer.Controllers
         }
         public async Task<IActionResult> Index(string url, int width, int height)
         {
-            string root = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host.Value;
+            string root = _httpContextAccessor.HttpContext.Request.Scheme + "://" 
+                + _httpContextAccessor.HttpContext.Request.Host.Value;
             string path = root + "/" + url;
+            string empty = "images/empty.jpg";
             using (Image sourceImage = await this.LoadImageFromUrl(path))
             {
                 if (sourceImage != null)
                 {
-                    try
-                    {
-                        using (Image rezisedImage = this.CropImage(sourceImage,
-                            width, height))
-                        {
-                            Stream outputStream = new MemoryStream();
-                            rezisedImage.Save(outputStream, ImageFormat.Jpeg);
-                            outputStream.Seek(0, SeekOrigin.Begin);
-                            return this.File(outputStream, "image/png");
-                        }
-                    }
-                    catch
-                    {
-                        // error
-                    }
+                    return this.ImageProcess(sourceImage, width, height);
                 }
                 else
                 {
-
+                    path = root + "/" + empty;
+                    Image emptyImage = await this.LoadImageFromUrl(path);
+                    return this.ImageProcess(emptyImage, width, height);
                 }
+            }
+        }
+
+        private IActionResult ImageProcess(Image sourceImage, int width, int height)
+        {
+            try
+            {
+                using (Image rezisedImage = this.CropImage(sourceImage,
+            width, height))
+                {
+                    Stream outputStream = new MemoryStream();
+                    rezisedImage.Save(outputStream, ImageFormat.Jpeg);
+                    outputStream.Seek(0, SeekOrigin.Begin);
+                    return this.File(outputStream, "image/png");
+                }
+            }
+            catch (Exception)
+            {
                 return this.NotFound();
             }
+
         }
         private async Task<Image> LoadImageFromUrl(string url)
         {
@@ -72,7 +81,6 @@ namespace ImageResizer.Controllers
 
             return image;
         }
-
         private Image CropImage(Image image, int width, int height)
         {
             Image resizedImage = new Bitmap(width, height);
